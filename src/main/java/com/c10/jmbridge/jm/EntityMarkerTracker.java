@@ -43,8 +43,7 @@ public class EntityMarkerTracker {
     }
 
     private static final Map<ResourceLocation, TrackedType> TRACKED = Map.of(
-            new ResourceLocation("mts", "builder_existing"),  new TrackedType("Vehicle (MTS)", COLOR_VEHICLE),
-            new ResourceLocation("mts", "builder_seat"),      new TrackedType("Vehicle Seat (MTS)", COLOR_VEHICLE));
+            new ResourceLocation("mts", "builder_existing"),  new TrackedType("Vehicle (MTS)", COLOR_VEHICLE));
 
     private final IClientAPI api;
     private final Map<UUID, MarkerOverlay> markers = new HashMap<>();
