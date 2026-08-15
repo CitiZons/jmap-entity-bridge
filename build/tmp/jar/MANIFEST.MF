@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Specification-Title: jmentitybridge
+Specification-Version: 1
+Implementation-Title: jm-entity-bridge
+Implementation-Version: 1.0.0
+
