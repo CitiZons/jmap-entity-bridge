@@ -11,11 +11,6 @@ Shows [Immersive Vehicles (MTS)](https://modrinth.com/mod/immersive-vehicles) ve
 | Immersive Vehicles (MTS) | Vehicles (`mts:builder_existing`) | Blue |
 | Immersive Vehicles (MTS) | Vehicle seats (`mts:builder_seat`) | Blue |
 
-## Not Supported
-
-- **MTR trains** — MTR's trains are not standard entities; they are simulated internally by `TransportSimulationCore` and rendered via a per-player forwarder entity. Tracking them would require direct integration with MTR's internal API.
-- **Yuushya blocks** — Yuushya's decorative blocks (including showblock/mixedblock created by the gourd tools) are block entities, not entities. They are static and already visible on the map as blocks.
-
 ## How It Works
 
 JourneyMap's built-in entity radar only recognizes vanilla entity types (`IAnimal`, `IMob`, etc.). This mod uses JourneyMap's Plugin API to place `MarkerOverlay` dots at tracked entity positions, updated once per second.
