@@ -6,7 +6,7 @@ license="MIT"
 modId="${mod_id}"
 version="${mod_version}"
 displayName="JourneyMap Entity Bridge"
-description='''Shows Immersive Vehicles (MTS), Yuushya and MTR entities as colored markers on the JourneyMap minimap and fullscreen map.'''
+description='''Shows Immersive Vehicles markers and locally cached MTR rails on the JourneyMap minimap and fullscreen map. Higher rails use lighter reds and draw above lower rails.'''
 displayTest="IGNORE_ALL_VERSION"
 
 [[dependencies.${mod_id}]]

@@ -1,6 +1,6 @@
 # JourneyMap Entity Bridge
 
-Shows [Immersive Vehicles (MTS)](https://modrinth.com/mod/immersive-vehicles) vehicles as colored markers on [JourneyMap](https://modrinth.com/mod/journeymap) minimap and fullscreen map.
+Shows [Immersive Vehicles (MTS)](https://modrinth.com/mod/immersive-vehicles) vehicles as colored markers and MTR 4.0.3 rails in red on the [JourneyMap](https://modrinth.com/mod/journeymap) minimap and fullscreen map. Higher rails are lighter and are drawn above lower rails; geometry is updated every 40 ticks and discovered tracks are cached per world.
 
 **Forge 1.20.1** | Client-side only | MIT License
 
@@ -10,14 +10,16 @@ Shows [Immersive Vehicles (MTS)](https://modrinth.com/mod/immersive-vehicles) ve
 |-----|--------|-------------|
 | Immersive Vehicles (MTS) | Vehicles (`mts:builder_existing`) | Blue |
 | Immersive Vehicles (MTS) | Vehicle seats (`mts:builder_seat`) | Blue |
+| MTR | Rails | Red (higher rails are lighter) |
 
 ## How It Works
 
-JourneyMap's built-in entity radar only recognizes vanilla entity types (`IAnimal`, `IMob`, etc.). This mod uses JourneyMap's Plugin API to place `MarkerOverlay` dots at tracked entity positions, updated once per second.
+JourneyMap's built-in entity radar only recognizes vanilla entity types (`IAnimal`, `IMob`, etc.). This mod uses JourneyMap's Plugin API to place `MarkerOverlay` dots at tracked entity positions, updated once per second, and draws MTR rails from their curve geometry every 40 ticks. Discovered rails are cached per world.
 
 - Entities are matched by registry ID at runtime — **no compile dependency** on MTS
 - If JourneyMap is not installed, the mod does nothing (the plugin class is never classloaded)
 - If MTS is absent, its entity types are simply never matched
+- If MTR is absent, rail rendering is simply disabled
 
 ## Installation
 
