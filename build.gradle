@@ -29,7 +29,23 @@ minecraft {
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     compileOnly fg.deobf(files("libs/journeymap-1.20.1-5.10.3-forge.jar"))
+    compileOnly files("libs/MTR-forge-4.0.3+1.20.1.jar")
 }
+
+sourceSets.test.compileClasspath += sourceSets.main.compileClasspath
+sourceSets.test.runtimeClasspath += sourceSets.main.compileClasspath
+
+tasks.register('railRegression', JavaExec) {
+    group = 'verification'
+    description = 'Checks rail geometry, height colors, disk cache and MTR deletion packet hook.'
+    dependsOn testClasses
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'com.c10.jmbridge.jm.RailRegression'
+    javaLauncher = javaToolchains.launcherFor { languageVersion = JavaLanguageVersion.of(17) }
+    workingDir = layout.buildDirectory.dir('rail-regression').get().asFile
+    doFirst { workingDir.mkdirs() }
+}
+tasks.named('check') { dependsOn 'railRegression' }
 
 processResources {
     var replaceProperties = [
@@ -46,7 +62,8 @@ jar {
                 'Specification-Title'   : mod_id,
                 'Specification-Version' : '1',
                 'Implementation-Title'  : project.name,
-                'Implementation-Version': project.version
+                'Implementation-Version': project.version,
+                'MixinConfigs': 'jmentitybridge.mixins.json'
         ])
     }
     finalizedBy 'reobfJar'

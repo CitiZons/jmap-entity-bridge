@@ -27,6 +27,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.fml.ModList;
 
 public class EntityMarkerTracker {
 
@@ -63,6 +64,7 @@ public class EntityMarkerTracker {
     private static final double FALLBACK_PLAYER_EXCLUSION_DIST_SQ = 2.0 * 2.0;
 
     private final IClientAPI api;
+    private final RailOverlayTracker rails;
     private final Map<UUID, MarkerOverlay> markers = new HashMap<>();
     private final Map<Class<?>, Optional<Field>> wrappedFieldCache = new HashMap<>();
 
@@ -73,6 +75,7 @@ public class EntityMarkerTracker {
 
     public EntityMarkerTracker(IClientAPI api) {
         this.api = api;
+        this.rails = ModList.get().isLoaded("mtr") ? new RailOverlayTracker(api) : null;
     }
 
     public void setMappingActive(boolean active) {
@@ -98,6 +101,9 @@ public class EntityMarkerTracker {
         if (level == null || mc.player == null) {
             clearAll();
             return;
+        }
+        if (this.rails != null) {
+            this.rails.update(level);
         }
         if (!this.api.playerAccepts(JMEntityBridgeMod.MODID, DisplayType.Marker)) {
             return;
@@ -224,6 +230,9 @@ public class EntityMarkerTracker {
     }
 
     public void clearAll() {
+        if (this.rails != null) {
+            this.rails.clear();
+        }
         for (MarkerOverlay overlay : this.markers.values()) {
             this.api.remove(overlay);
         }
